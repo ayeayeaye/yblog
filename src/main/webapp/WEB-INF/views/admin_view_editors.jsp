@@ -9,23 +9,34 @@
 </head>
 <body>
 
+<c:if test="${empty sessionScope.USERSESSION.getSessionId()}">	
+<%@ include file="login_redirect.jsp"%>
+</c:if>
+
 <div class="card-block">							
 			<table class="table table-hover">
 				<thead>
-					<tr>
+					<tr class="bg-secondary">
 						<th>No</th>
-						<th>Editor Id</th>
+						<th>Role</th>
 						<th>Name</th>
-						<th>Active</th>
 						<th>Activation</th>
+						<th></th>
 					</tr>
 				</thead>
 				<tbody>
-				<c:if test="${!empty editorsUseList}">	
-					<c:forEach var="editorsUser" items="${editorsUseList}" varStatus="counter">
+				<c:if test="${!empty userList}">	
+					<c:forEach var="editorsUser" items="${userList}" varStatus="counter">
 						<tr>
 							<td>${counter.count}</td>
-							<td>E${editorsUser.userId}</td>
+							<td>
+								<c:if test="${editorsUser.isAdmin() eq true}">
+									Admin
+								</c:if>
+								<c:if test="${editorsUser.isEditor() eq true}">
+									Editor
+								</c:if>								
+							</td>
 							<td>${editorsUser.userName}</td>
 							<td>${editorsUser.active}</td>
 							<td>
@@ -46,7 +57,7 @@
 				</tbody>
 			</table>
 				
-			<c:if test="${empty editorsUseList}">
+			<c:if test="${empty userList}">
 				There are no editors.
 			</c:if>	
 </div>

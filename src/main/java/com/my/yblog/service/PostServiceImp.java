@@ -41,6 +41,12 @@ public class PostServiceImp implements PostService {
 		return postList;
 	}
 
+	@Override
+	public List<Post> findPublishedPost() {
+		List<Post> postList = postRepository.findPublishedPost();
+				return postList;
+	}
+
 
 
 }

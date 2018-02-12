@@ -26,7 +26,7 @@
       <h3>YBlog</h3>
     </div>
     <ul class="nav navbar-nav navbar-right">
-    	 <c:if test="${sessionScope.USERSESSION.getSessionId() ne null}"> 
+    	 <c:if test="${sessionScope.USERSESSION.getSessionId() ne null  and sessionScope.USERSESSION.getUser().getActive() != 'NO'}"> 
     	 	<li><a href="#"><i class="fa fa-user"></i> ${sessionScope.USERSESSION.user.userName}</a></li>
     	 	<li><a href="${pageContext.request.contextPath}/logout" ><i class="fa fa-sign-out"></i>Logout</a></li>
     	 </c:if>		

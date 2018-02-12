@@ -57,7 +57,7 @@ window.onload = function() {
 									<a href="${pageContext.request.contextPath}/admin/dashboard"><i class="fa fa-home"></i><br>Home</a>
 								</div>							
 								<div>
-									<a href="${pageContext.request.contextPath}/admin/view/editor"><i class="fa fa-users"></i><br>View Editors </a>
+									<a href="${pageContext.request.contextPath}/admin/view/user"><i class="fa fa-users"></i><br>View Users </a>
 								</div>
 								<div>
 									<a href="${pageContext.request.contextPath}/admin/create/editor"><i class="fa fa-id-card-o"></i><br>Create Editor</a>
@@ -66,7 +66,7 @@ window.onload = function() {
 									<a href="${pageContext.request.contextPath}/admin/view/post"><i class="fa fa-newspaper-o"></i><br>View Posts</a>
 								</div>
 							</c:when>
-							<c:when test="${ sessionScope.USERSESSION.getUser().isEditor() == true}">	
+							<c:when test="${ sessionScope.USERSESSION.getUser().isEditor() == true and sessionScope.USERSESSION.getUser().getActive() == 'YES'}">	
 								<div>
 									<a href="${pageContext.request.contextPath}/editor/dashboard"><i class="fa fa-home"></i><br>Home</a>
 								</div>	
@@ -76,6 +76,9 @@ window.onload = function() {
 								<div>
 									<a href="${pageContext.request.contextPath}/editor/preview/post"><i class="fa fa-newspaper-o"></i><br>Your Posts</a>
 								</div>
+								<div>
+									<a href="${pageContext.request.contextPath}/editor/status/post"><i class="fa fa-map-pin"></i><br>Status</a>
+								</div>								
 								<div>
 								</div>				
 							</c:when>

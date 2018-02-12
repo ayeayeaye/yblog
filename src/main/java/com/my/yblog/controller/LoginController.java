@@ -69,7 +69,7 @@ public class LoginController {
 				{
 					if( us.getUser().getActive().equals("YES"))
 					{
-						msg = "redirect:/editor/dashboard";
+						msg = "redirect:/editor/preview/post";
 					}
 					else
 					{

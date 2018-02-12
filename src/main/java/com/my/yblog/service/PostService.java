@@ -17,6 +17,8 @@ public interface PostService {
 
 	List<Post> findAllPosts();
 
+	List<Post> findPublishedPost();
+
 
 
 }

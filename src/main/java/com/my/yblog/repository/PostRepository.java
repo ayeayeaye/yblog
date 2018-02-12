@@ -17,6 +17,9 @@ public interface PostRepository extends JpaRepository<Post, String> {
 	@Query("SELECT p FROM Post p WHERE p.postId=:id")
 	Post findAPostByPostId(@Param("id") int postId);
 
+	@Query("SELECT p FROM Post p WHERE p.status='Published'")
+	List<Post> findPublishedPost();
+
 
 
 }

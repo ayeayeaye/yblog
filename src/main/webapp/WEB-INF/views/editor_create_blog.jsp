@@ -2,17 +2,11 @@
 <%@ taglib prefix="spring" uri="http://www.springframework.org/tags"%>
 <%@ taglib uri="http://www.springframework.org/tags/form" prefix="form"%>
 
-<!DOCTYPE html>
-<html lang="en">
-<head>
-
-</head>
-<body>
 
  <div>
 	<form:form action="${pageContext.request.contextPath}/editor/create/post" commandName="newPost"  method="post" enctype="multipart/form-data" >
-		<label style="color: red" >${sizeErrorMsg}</label>
-		<label style="color: red" >${typeErrorMsg}</label>
+		<label style="color: red" >.${sizeErrorMsg}</label>
+		<label style="color: red" >.${typeErrorMsg}</label>
 	
 		<div class="form-group">
 		<table class="table table-bordered">
@@ -64,6 +58,3 @@
 	    	  $('#contentInput').val(text);
 	    	});
 	    </script>
-</body>
-
-</html>

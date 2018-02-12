@@ -2,64 +2,47 @@
 <%@ taglib prefix="spring" uri="http://www.springframework.org/tags"%>
 <%@ taglib uri="http://www.springframework.org/tags/form" prefix="form"%>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
-<!DOCTYPE html>
-<html lang="en">
-<head>
-<meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
-<title>Insert title here</title>
-</head>
-<body>
+<link rel="stylesheet" href="../css/styles.css">
+
+
+<c:if test="${empty sessionScope.USERSESSION.getSessionId()}">	
+<%@ include file="login_redirect.jsp"%>
+</c:if>
 
 <div>
-
 
 <c:set var="fmtReqDate">	
 	<fmt:formatDate value="${post.postDate}" pattern="dd-MM-yyyy" />
 </c:set>
-<form action="${pageContext.request.contextPath}/admin/publish/date/post/${post.postId}">
-	<table>		
-		<tr >
-			<td rowspan="5">
-				<c:set value="${post.image}" var="img"></c:set>
-				<img src="<%= request.getContextPath()%>/images/${img}" width="300px" height="200px">
-			</td>
-			<td><h2><b>${post.title}</b></h2></td>
-		</tr>
-		<tr>
-			<td><h5>Editor: <b>${post.userModel.userName}</b></h5></td>
-		</tr>
-		<tr>		
-			<td>
-			<h5>Status: <b>${post.status}</b></h5>
-			</td>
-		</tr>
-		<tr>
-			<td><h5>Date: <b>${fmtReqDate}</b></h5></td>
-		</tr>
-		<tr>
-			<td>${post.content}</td>
-		</tr>
-		<tr>		
-			<td colspan="2">
-				<c:choose>
-					<c:when test="${post.status == 'Topublish' or post.status == 'Archive'}" >
-						<br>
-						<a href="${pageContext.request.contextPath}/admin/approve/post/${post.postId}" class="btn btn-primary">Approve Now(Published)</a>
-						<a href="${pageContext.request.contextPath}/admin/reject/post/${post.postId}" class="btn btn-danger">Reject</a>	
-						<%-- <a href="${pageContext.request.contextPath}/admin/publish/date/post/${post.postId}" class="btn btn-warning">Set Publish Date</a> --%>	
-						<br/><br/>
-						<input type="date" name="topublishDate">
-						<button type="submit" class="btn btn-warning">Set Publish Date</button>						
-					</c:when>	
-				</c:choose>				
+<form action="${pageContext.request.contextPath}/admin/set/archive/date/post/${post.postId}">
 
-			</td>
-		</tr>
-	</table>
+	<h3><b>${post.title}</b></h3>
+	<br>
+	<h5>Status : ${post.status}</h5>
+	<h5>Created By : ${post.userModel.userName}</h5>
+	<h5>Date : ${fmtReqDate}</h5>	
+	<br>
+	<c:set value="${post.image}" var="img"></c:set>
+	<img src="<%= request.getContextPath()%>/images/${img}" width="300px" height="200px">
+	<br>
+	${post.content}
+	<br>
+				<c:choose>
+					<c:when test="${post.status == 'Topublish'}" >
+						<a href="${pageContext.request.contextPath}/admin/draft/post/${post.postId}" class="btn btn-secondary">Draft</a>
+						<a href="${pageContext.request.contextPath}/admin/approve/post/${post.postId}" class="btn btn-primary">Publish</a>
+						<a href="${pageContext.request.contextPath}/admin/reject/post/${post.postId}" class="btn btn-danger">Reject</a>						
+					</c:when>	
+					<c:when test="${post.status == 'Published'}" >
+						<a href="${pageContext.request.contextPath}/admin/archive/post/${post.postId}" class="btn btn-success">Archive</a>
+						<div class="pull-right"> 
+						<button type="submit" class="btn btn-success" >Set Archive Date</button>
+						<input type="date" name="arcDate">
+						</div>
+					</c:when>						
+				</c:choose>		
 </form>
-<br/>
+
+<a href="${pageContext.request.contextPath}/admin/view/post" >Back to post list</a>
 
 </div>
-
-</body>
-</html>

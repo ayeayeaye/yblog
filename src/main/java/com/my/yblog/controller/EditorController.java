@@ -112,7 +112,7 @@ public class EditorController {
 	@RequestMapping(value="/preview/post")
 	public ModelAndView previewPost(HttpSession session)
 	{
-		ModelAndView moView = new ModelAndView("editor_preview_blog");
+		ModelAndView moView = new ModelAndView("editor_preview_post");
 		
 		UserSession us = (UserSession) session.getAttribute("USERSESSION");
 		int loginUserId =us.getUser().getUserId();
@@ -137,8 +137,15 @@ public class EditorController {
 	{		
 		Post post = postService.findAPostByPostId(postId);
 		post.setStatus(PostStatus.TOPUBLISH.toString());
-		postService.savePost(post);
-		
+		postService.savePost(post);	
+		return "redirect:/editor/preview/post";		
+	}
+	@RequestMapping(value="/draft/post/{postId}")
+	public String draftPost(@PathVariable Integer postId, HttpSession session)
+	{		
+		Post post = postService.findAPostByPostId(postId);
+		post.setStatus(PostStatus.DRAFT.toString());
+		postService.savePost(post);	
 		return "redirect:/editor/preview/post";		
 	}
 	
@@ -153,16 +160,42 @@ public class EditorController {
 	
 	@RequestMapping(value="/edit/post/{postId}" , method=RequestMethod.POST)
 	public String editedPost(@PathVariable Integer postId, HttpSession session, HttpServletRequest request,
-			 @RequestParam("EditedFile") MultipartFile file)
-	{
-		ModelAndView moView = new ModelAndView("test");		
+			 @RequestParam("EditedFile") MultipartFile newfile) throws IOException
+	{	
 		Post newEditedPost =  postService.findAPostByPostId(postId);
+		String oldFileName = newEditedPost.getImage();
 		newEditedPost.setTitle(request.getParameter("EditedTitle"));
-		newEditedPost.setImage(file.getOriginalFilename());
-		newEditedPost.setContent(request.getParameter("EditedContent"));		
+		newEditedPost.setContent(request.getParameter("EditedContent"));
+		/*User replace image => New*/
+		if(!newfile.getName().isEmpty())
+		{
+			doUpload(newfile, request);
+			newEditedPost.setImage(newfile.getName());
+		}
+		else
+		{
+			newEditedPost.setImage(oldFileName);
+		}
 		postService.savePost(newEditedPost);
-		moView.addObject("post",newEditedPost);
+		
 		return "redirect:/editor/preview/post";		
+	}
+	
+	@RequestMapping(value="/status/post")
+	public ModelAndView statusPost(HttpSession session)
+	{
+		ModelAndView moView = new ModelAndView("editor_status_post");
+		try{
+			UserSession us = (UserSession) session.getAttribute("USERSESSION");
+			int loginUserId =us.getUser().getUserId();
+			
+			List<Post> posts =postService.findPostsByEditor(loginUserId);
+			moView.addObject("posts", posts);		
+		}catch (Exception e) {
+			 
+		}
+				
+		return moView;		
 	}
 	/*METHOD*/
 	public String doUpload(MultipartFile file, HttpServletRequest request) throws IOException

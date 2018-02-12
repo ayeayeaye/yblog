@@ -12,7 +12,7 @@
 
 	<table class="table table-hover">
 		<thead>
-			<tr>
+			<tr class="bg-secondary">
 				<th>NO</th>
 				<th>EDITOR</th>
 				<th>TITLE</th>

@@ -1,2 +1,29 @@
 @CHARSET "UTF-8";
 
+.loginForm form
+{
+	margin-left: 25%;
+	margin-top: 15%;
+}
+.dbone
+{
+	border-style: solid;
+	height: 30%;	
+	margin-top: 25px;
+	margin-left: 15px;
+}
+.dbone i
+{
+	font-size: 160px;
+	margin-top: 20px;
+}
+.dbtwo
+{
+	margin-top: 10px;
+}
+.pull-right{
+	float: right;
+}
+.right_menu{
+	background-color: #F8F2F0;
+}
